@@ -259,7 +259,7 @@ $(document).ready(() => {
         const results = data[0].mixedResults;
         let posts = '';
 
-        console.log('data!!!!', results);
+        // console.log('data!!!!', results);
         for (let j = 0; j < results.length; j++) {
           const item = results[j];
           posts += renderPost(item);
