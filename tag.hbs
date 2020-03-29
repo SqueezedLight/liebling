@@ -21,11 +21,14 @@ into the {body} of the default.hbs template --}}
     </div>
     </section>
   {{/tag}}
-  
+
   <main>
     <div class="l-content">
       <div class="l-wrapper" data-aos="fade-up" data-aos-delay="300">
         <div class="l-grid centered">
+          <div class="m-tag__description">
+            {{#tag}}<p>{{description}}</p>{{/tag}}
+          </div>
           {{!-- The tag below iterates over all the posts --}}
           {{> "loop"}}
         </div>

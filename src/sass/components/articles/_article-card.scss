@@ -255,8 +255,16 @@
     font-weight: 600;
   }
 }
+
 h2.m-article-card__title {
   white-space: nowrap;
+}
+
+.m-tag__description {
+  width: 100%;
+  margin-bottom: 2rem;
+  text-align: center;
+  font-size: 1.3rem;
 }
 
 div.m-article-card__desc {
