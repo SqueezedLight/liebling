@@ -104,12 +104,90 @@ function prepareProgressCircle() {
   }, 300)
 }
 
+/* Functions for Elastic Results */
+function renderPost(item) {
+  const img = document.querySelector('.m-hero__picture');
+  const style = img.currentStyle || window.getComputedStyle(img, false);
+  const fallbackImageUrl = style.backgroundImage.slice(4, -1).replace(/"/g, "");
+
+  const postImgUrl = item.post_img_path ? item.post_img_path : fallbackImageUrl;
+  const url = `https://buddyme.me/microposts/${item.id}`;
+
+  return `
+    <div class="m-recommended-slider__item">
+      <article class="m-article-card post">
+        <div class="m-article-card__picture" style="background-image: url(${postImgUrl});">
+
+          <a href="${url}" class="m-article-card__picture-link" aria-label="Article"></a>
+          <a href="${url}}" class="m-article-card__author js-tooltip" aria-label="Authors">
+            <div style="background-image: url(${item.user_infos.avatar});"></div>
+          </a>
+        </div>
+
+        <div class="m-article-card__info">
+          <a href=${url} class="m-article-card__tag">${item.location}</a>
+
+          <a href="${url}" class="m-article-card__info-link">
+            <div>
+              <h2 class="m-article-card__title js-article-card-title js-article-card-title-no-image" title="${item.title}">
+                ${item.title}
+              </h2>
+              <div class="m-article-card__desc">${item.content}</div>
+            </div>
+          </a>
+        </div>
+      </article>
+    </div>`;
+}
+
+function buildContainer(content) {
+  return `
+    <section class="m-recommended">
+      <div class="l-wrapper in-recommended">
+        <h3 class="m-section-title in-recommended">Aktuell auf BuddyMe</h3>
+        <div class="m-recommended-articles">
+          <div class="m-recommended-slider js-recommended-articles">
+            ${content}
+          </div>
+        </div>
+      </div>
+    </section>`;
+}
+
+function triggerSlick(element) {
+  $(element).find('.js-recommended-articles').slick({
+      arrows: true,
+      infinite: true,
+      prevArrow: '<button class="m-icon-button filled in-recommended-articles slick-prev" aria-label="Previous"><span class="icon-arrow-left"></span></button>',
+      nextArrow: '<button class="m-icon-button filled in-recommended-articles slick-next" aria-label="Next"><span class="icon-arrow-right"></span></button>',
+      mobileFirst: true,
+      responsive: [
+        {
+          breakpoint: 720,
+          settings: {
+            slidesToShow: 2
+          }
+        },
+        {
+          breakpoint: 1023,
+          settings: {
+            arrows: true,
+            slidesToShow: 2
+          }
+        }
+      ],
+      rtl: isRTL()
+    });
+}
+/* END Functions for Elastic Results */
+
 $(document).ready(() => {
   $aosWrapper = $('.js-aos-wrapper')
   const $scrollButton = $('.js-scrolltop')
   const $loadComments = $('.js-load-comments')
   const $commentsIframe = $('.js-comments-iframe')
   const $recommendedArticles = $('.js-recommended-articles')
+  const shortcodes = document.querySelectorAll('.shortcode');
 
   fitvids('.js-post-content')
 
@@ -159,6 +237,41 @@ $(document).ready(() => {
       ],
       rtl: isRTL()
     })
+  }
+
+  if (shortcodes.length > 0) {
+    for (let i = 0; i < shortcodes.length; i++) {
+      let c = shortcodes[i];
+      const q = c.getAttribute('data-q');
+      const city = c.getAttribute('data-city');
+      const limit = c.getAttribute('data-limit');
+      const type = c.getAttribute('data-type');
+
+      const cityParam = city ? `&city=${city}` : '';
+      const limitParam = limit ? `&limit=${limit}` : '';
+      const typeParam = type ? `&type=${type}` : '';
+
+      const url = `https://buddyme.me/s/blog.js?q=${q}${cityParam}${limitParam}${typeParam}`;
+
+      fetch(url)
+      .then((resp) => resp.json())
+      .then(function(data) {
+        const results = data[0].mixedResults;
+        let posts = '';
+
+        console.log('data!!!!', results);
+        for (let j = 0; j < results.length; j++) {
+          const item = results[j];
+          posts += renderPost(item);
+        }
+        // const html = renderPost();
+        c.innerHTML = buildContainer(posts);
+        triggerSlick(c);
+      })
+      .catch(function(error) {
+        console.log(error);
+      });
+    }
   }
 
   $scrollButton.click(() => {
