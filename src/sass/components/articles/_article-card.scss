@@ -255,11 +255,14 @@
     font-weight: 600;
   }
 }
+h2.m-article-card__title {
+  white-space: nowrap;
+}
 
 div.m-article-card__desc {
   font-size: 1rem;
   text-decoration: none;
-  height: 81px;
+  height: 100px;
   overflow: hidden;
   margin: 0;
   letter-spacing: .3px;
