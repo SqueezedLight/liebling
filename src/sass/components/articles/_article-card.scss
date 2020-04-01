@@ -250,6 +250,9 @@
   font-size: 1.250rem;
   font-weight: 400;
   margin: 0;
+  max-width: 100%;
+  text-overflow: ellipsis;
+  overflow: hidden;
 
   @include respond-to('medium') {
     font-weight: 600;

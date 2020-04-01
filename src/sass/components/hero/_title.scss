@@ -3,7 +3,8 @@
   letter-spacing: 0.4px;
   line-height: 1.3;
   font-size: 1.750rem;
-  font-weight: 700;
+  // font-weight: 700;
+  font-weight: 500;
   margin: 0 0 15px;
 
   @include respond-to('medium') {
