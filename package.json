@@ -54,5 +54,8 @@
     "desktop": "assets/screenshot-desktop.jpg",
     "mobile": "assets/screenshot-mobile.jpg"
   },
-  "version": "0.6.6"
+  "version": "0.6.6",
+  "dependencies": {
+    "tocbot": "^4.10.1"
+  }
 }

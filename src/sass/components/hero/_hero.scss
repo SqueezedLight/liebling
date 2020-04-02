@@ -4,7 +4,7 @@
   // min-height: 365px;
   overflow: hidden;
   padding: 80px 75px 0 75px;
-  background-color: var(--secondary-subtle-color);
+  // background-color: var(--secondary-subtle-color);
   @extend .content-centered;
 
   @include respond-to('medium') {
@@ -36,7 +36,10 @@
 }
 
 .m-hero__picture {
-  position: absolute;
+  display: none;
+  visibility: hidden;
+  height: 0;
+  /* position: absolute;
   top: 0;
   left: 0;
   width: 100%;
@@ -48,7 +51,7 @@
   opacity: 0.7;
   &.in-post {
     opacity: 1;
-  }
+  } */
 }
 
 .m-hero__content {

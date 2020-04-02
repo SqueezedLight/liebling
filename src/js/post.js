@@ -1,4 +1,5 @@
 import $ from 'jquery'
+import tocbot from 'tocbot'
 import slick from 'slick-carousel'
 import stickybits from 'stickybits'
 import mediumZoom from 'medium-zoom'
@@ -109,8 +110,10 @@ function renderPost(item) {
   const img = document.querySelector('.m-hero__picture');
   const style = img.currentStyle || window.getComputedStyle(img, false);
   const fallbackImageUrl = style.backgroundImage.slice(4, -1).replace(/"/g, "");
+  const fallbackUserImageUrl = 'https://buddyme.me/favicon.ico';
 
   const postImgUrl = item.post_img_path ? item.post_img_path : fallbackImageUrl;
+  const userImgUrl = item.user_infos.avatar.length > 0 ? item.user_infos.avatar : fallbackUserImageUrl;
   const url = `https://buddyme.me/microposts/${item.id}`;
 
   return `
@@ -120,7 +123,7 @@ function renderPost(item) {
 
           <a href="${url}" class="m-article-card__picture-link" aria-label="Article"></a>
           <a href="${url}}" class="m-article-card__author js-tooltip" aria-label="Authors">
-            <div style="background-image: url(${item.user_infos.avatar});"></div>
+            <div style="background-image: url(${userImgUrl});"></div>
           </a>
         </div>
 
@@ -189,7 +192,13 @@ $(document).ready(() => {
   const $recommendedArticles = $('.js-recommended-articles')
   const shortcodes = document.querySelectorAll('.shortcode');
 
-  fitvids('.js-post-content')
+  fitvids('.js-post-content');
+
+  tocbot.init({
+    tocSelector: '.toc',
+    contentSelector: '.l-post-content',
+    hasInnerContainers: true
+  });
 
   function adjustImageGallery() {
     const images = document.querySelectorAll('.kg-gallery-image img')
