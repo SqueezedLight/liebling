@@ -128,7 +128,7 @@ function renderPost(item) {
         </div>
 
         <div class="m-article-card__info">
-          <a href=${url} class="m-article-card__tag">${item.location}</a>
+          <a href=${url} class="m-article-card__tag">${item.user_infos.name} aus ${item.location}</a>
 
           <a href="${url}" class="m-article-card__info-link">
             <div>
