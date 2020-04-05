@@ -122,7 +122,7 @@ function renderPost(item) {
         <div class="m-article-card__picture" style="background-image: url(${postImgUrl});">
 
           <a href="${url}" class="m-article-card__picture-link" aria-label="Article"></a>
-          <a href="${url}}" class="m-article-card__author js-tooltip" aria-label="Authors">
+          <a href="${url}" class="m-article-card__author js-tooltip" aria-label="Authors">
             <div style="background-image: url(${userImgUrl});"></div>
           </a>
         </div>
