@@ -143,11 +143,11 @@ function renderPost(item) {
     </div>`;
 }
 
-function buildContainer(content) {
+function buildContainer(content, heading) {
   return `
     <section class="m-recommended">
       <div class="l-wrapper in-recommended">
-        <h3 class="m-section-title in-recommended">Aktuell auf BuddyMe</h3>
+        <h3 class="m-section-title in-recommended">${heading}</h3>
         <div class="m-recommended-articles">
           <div class="m-recommended-slider js-recommended-articles">
             ${content}
@@ -255,6 +255,7 @@ $(document).ready(() => {
       const city = c.getAttribute('data-city');
       const limit = c.getAttribute('data-limit');
       const type = c.getAttribute('data-type');
+      const heading = c.getAttribute('data-heading');
 
       const cityParam = city ? `&city=${city}` : '';
       const limitParam = limit ? `&limit=${limit}` : '';
@@ -274,7 +275,7 @@ $(document).ready(() => {
           posts += renderPost(item);
         }
         // const html = renderPost();
-        c.innerHTML = buildContainer(posts);
+        c.innerHTML = buildContainer(posts, heading);
         triggerSlick(c);
       })
       .catch(function(error) {
