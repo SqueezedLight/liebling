@@ -100,7 +100,7 @@
   background-size: cover;
 
   @include respond-to('medium') {
-    height: 220px;
+    height: 150px;
   }
 }
 

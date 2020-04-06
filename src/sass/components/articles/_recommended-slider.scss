@@ -18,13 +18,13 @@
 
     @include respond-to('large') {
       .m-article-card__picture {
-        height: 190px;
+        height: 120px;
       }
     }
 
     @include respond-to('extra-large') {
       .m-article-card__picture {
-        height: 220px;
+        height: 150px;
       }
     }
   }

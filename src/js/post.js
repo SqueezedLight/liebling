@@ -107,19 +107,20 @@ function prepareProgressCircle() {
 
 /* Functions for Elastic Results */
 function renderPost(item) {
-  const img = document.querySelector('.m-hero__picture');
-  const style = img.currentStyle || window.getComputedStyle(img, false);
-  const fallbackImageUrl = style.backgroundImage.slice(4, -1).replace(/"/g, "");
+  // const img = document.querySelector('.m-hero__picture');
+  // const style = img.currentStyle || window.getComputedStyle(img, false);
+  const fallbackImageUrl = 'https://buddyme.me/double-bubble-outline.png'; // style.backgroundImage.slice(4, -1).replace(/"/g, "");
   const fallbackUserImageUrl = 'https://buddyme.me/favicon.ico';
 
   const postImgUrl = item.post_img_path ? item.post_img_path : fallbackImageUrl;
+  const fallbackHeight = item.post_img_path ? '' : 'height: 90px;';
   const userImgUrl = item.user_infos.avatar.length > 0 ? item.user_infos.avatar : fallbackUserImageUrl;
   const url = `https://buddyme.me/microposts/${item.id}`;
 
   return `
     <div class="m-recommended-slider__item">
       <article class="m-article-card post">
-        <div class="m-article-card__picture" style="background-image: url(${postImgUrl});">
+        <div class="m-article-card__picture" style="background-image: url(${postImgUrl}); ${fallbackHeight}">
 
           <a href="${url}" class="m-article-card__picture-link" aria-label="Article"></a>
           <a href="${url}" class="m-article-card__author js-tooltip" aria-label="Authors">
@@ -135,7 +136,40 @@ function renderPost(item) {
               <h2 class="m-article-card__title js-article-card-title js-article-card-title-no-image" title="${item.title}">
                 ${item.title}
               </h2>
-              <div class="m-article-card__desc">${item.content}</div>
+              <div class="m-article-card__desc">
+                ${item.content}
+              </div>
+
+              <button style="margin-top: 15px;">Jetzt Mitmachen</button>
+            </div>
+          </a>
+        </div>
+      </article>
+    </div>`;
+}
+
+function renderSignUpPost() {
+  return `
+    <div class="m-recommended-slider__item">
+      <article class="m-article-card post">
+        <div class="m-article-card__picture" style="background-image: url('https://buddyme.me/come-in.jpg');">
+
+          <a href="https://buddyme.me/signup" class="m-article-card__picture-link" aria-label="Article"></a>
+          <a href="https://buddyme.me/signup" class="m-article-card__author js-tooltip" aria-label="Authors">
+            <div style="background-image: url('https://buddyme.me/favicon.ico');"></div>
+          </a>
+        </div>
+
+        <div class="m-article-card__info" style="padding-top: 20px;">
+          <a href="https://buddyme.me/signup" class="m-article-card__info-link">
+            <div>
+              <h2 class="m-article-card__title js-article-card-title js-article-card-title-no-image" title="Neugierig? Komm rein!">
+                Neugierig? Dann mach mit!
+              </h2>
+              <div class="m-article-card__desc" style="height: 150px;">
+                Die Registrierung ist kostenlos und dauert keine 2 Minuten. Entdecke 1000e neue Freunde auf BuddyMe. Auch in deiner Stadt.
+                <button style="margin-top: 15px;">Jetzt anmelden</button>
+              </div>
             </div>
           </a>
         </div>
@@ -145,7 +179,7 @@ function renderPost(item) {
 
 function buildContainer(content, heading) {
   return `
-    <section class="m-recommended">
+    <section class="m-recommended" style="padding-top: 0;">
       <div class="l-wrapper in-recommended">
         <h3 class="m-section-title in-recommended">${heading}</h3>
         <div class="m-recommended-articles">
@@ -274,6 +308,8 @@ $(document).ready(() => {
           const item = results[j];
           posts += renderPost(item);
         }
+
+        posts += renderSignUpPost();
         // const html = renderPost();
         c.innerHTML = buildContainer(posts, heading);
         triggerSlick(c);
